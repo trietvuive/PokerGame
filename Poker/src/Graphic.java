@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,7 +12,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -20,24 +24,37 @@ public class Graphic extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private DrawCanvas canvas;
-	int width = 1500;
-	int height = 800;
-	int[] xcoord = new int[] { 410,705,1000,410,705,1000,130, 130,1260,1260 };
-	int[] ycoord = new int[] { 140,140,140,660,660,660,300, 470, 300,470 };
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int originalwidth = screenSize.width;
+	int originalheight = screenSize.height;
+	int width;
+	int height;
+	int[] xcoord = new int[] { 410,705,1000,410,705,1000,130, 130,1300,1300 };
+	int[] ycoord = new int[] { 140,140,140,720,720,720,300, 470, 300,470 };
 	Table t;
 	JButton again;
-
+	JFrame frame = this;
 	Graphic(Table t) {
 		this.t = t;
 		canvas = new DrawCanvas();
-		canvas.setPreferredSize(new Dimension(width, height));
+		canvas.setPreferredSize(new Dimension(originalwidth, originalheight-50));
 		Container cp = getContentPane();
 		cp.add(canvas);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		setTitle("Poker Solver");
-		setVisible(true);
 		setResizable(true);
+		setVisible(true);
+		again = new JButton("Run it back");
+		again.setBackground(Color.green);
+		again.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				t.runitback();
+				repaint();
+			}
+		});
+		this.add(again);
+		
 	}
 	Image getImage(Card c)
 	{
@@ -57,12 +74,12 @@ public class Graphic extends JFrame {
 		private static final long serialVersionUID = 1L;
 
 		public void paintComponent(Graphics g) {
-			long f = System.currentTimeMillis();
-			Rectangle r = canvas.getBounds();
+			Rectangle r = frame.getBounds();
 			width = r.width;
 			height = r.height;
 			if(width<1200)width = 1200;
 			if(height<600)height = 600;
+			System.out.println("Width is:" +width+" Height is: "+height);
 			BufferedImage facedown = null;
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			try {
@@ -104,33 +121,24 @@ public class Graphic extends JFrame {
 				i++;
 			}
 			paintCard(button,i,g2d);
-			int xcomm = 450*width/1500;
+			int xcomm = 450*width/originalwidth;
 			for(Card c:t.communityCard())
 			{
 				Image card = getImage(c);
-				g2d.drawImage(card,xcomm,height*350/800,width*100/1500,height*100/800,this);
-				g2d.drawRect((xcomm-10), height*340/800, width*120/1500, height*120/800);
-				xcomm+=width*120/1500;
+				g2d.drawImage(card,xcomm,height*350/originalheight,width*100/originalwidth,height*100/originalheight,this);
+				g2d.drawRect((xcomm-10), height*340/originalheight, width*120/originalwidth, height*120/originalheight);
+				xcomm+=width*120/originalwidth;
 			}
-			again = new JButton("Run it back");
-			again.setBackground(Color.green);
-			again.setBounds(width*650/1500, height*475/800, width*200/1500, height*100/800);
+			again.setBounds(width*650/originalwidth, height*475/originalheight, width*200/originalwidth, height*100/originalheight);
 			this.add(again);
-			again.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					t.runitback();
-					repaint();
-				}
-			});
-			System.out.println(System.currentTimeMillis()-f);
 		}
 		void paintCard(Player player, int i, Graphics2D g2d)
 		{
 
 			Image one = getImage(player.getList().get(0));
 			Image two = getImage(player.getList().get(1));
-			g2d.drawImage(one,width*xcoord[i]/1500 -width*55/1500, height*ycoord[i]/800-height*55/800, width*110/1500, height*110/800, this);
-			g2d.drawImage(two,width*xcoord[i]/1500+width*55/1500, height*ycoord[i]/800-height*55/800, width*110/1500, height*110/800, this);
+			g2d.drawImage(one,width*xcoord[i]/originalwidth -width*55/originalwidth, height*ycoord[i]/originalheight-height*55/originalheight, width*110/originalwidth, height*110/originalheight, this);
+			g2d.drawImage(two,width*xcoord[i]/originalwidth+width*55/originalwidth, height*ycoord[i]/originalheight-height*55/originalheight, width*110/originalwidth, height*110/originalheight, this);
 		}
 	}
 }
