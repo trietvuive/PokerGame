@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 enum HandRank 
-{RoyalFlush(1), StraightFlush(2), FourOfAKind(3), FullHouse(4),Flush(5),Straight(6),ThreeOfAKind(7),TwoPairs(8),Pair(9),HighCard(10)
+{RoyalFlush(1), StraightFlush(2), FourOfAKind(3), FullHouse(4),Flush(5),Straight(6),ThreeOfAKind(7),TwoPairs(8),Pair(9),HighCard(10);
 	int value;
 	HandRank(int value)
 	{
