@@ -1,4 +1,9 @@
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
 public class Runner {
 	static boolean holdem = true;
 	static boolean omaha = false;

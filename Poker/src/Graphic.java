@@ -1,20 +1,10 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import javax.imageio.ImageIO;
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -101,7 +91,7 @@ public class Graphic extends JFrame {
 	Image getImage(Card c) {
 		String name = "cards_png_zip/PNG/" + c + ".png";
 		try {
-			return ImageIO.read(new File(name));
+			return ImageIO.read(ResourceLoader.load(name));
 		} catch (IOException e) {
 			System.out.println("RIP");
 		}
@@ -128,8 +118,8 @@ public class Graphic extends JFrame {
 			heightratio = (double) height / originalheight;
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			try {
-				facedown = ImageIO.read(new File("cards_png_zip/PNG/green_back.png"));
-				ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Simply Complicated.ttf")));
+				facedown = ImageIO.read(ResourceLoader.load("cards_png_zip/PNG/green_back.png"));
+				ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.load("Simply Complicated.ttf")));
 			} catch (FontFormatException | IOException e) {
 				e.printStackTrace();
 			}
