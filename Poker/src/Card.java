@@ -19,7 +19,7 @@ enum Rank {
 	int compare(Rank other) {
 		return this.worth - other.worth;
 	}
-	}
+}
 
 public class Card {
 	Suit suit;

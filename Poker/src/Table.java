@@ -29,18 +29,25 @@ public class Table {
 	}
 	void runitall()
 	{
-		deck = new Deck();
-		dealHands();
-		initiateCommunity();
-		dealAll();
-		button = button.next;
+		if(!finishDealing())
+		{
+			dealAll();
+		}
+		else
+		{
+			button = button.next;
+			deck = new Deck();
+			dealHands();
+			initiateCommunity();
+			dealAll();
+		}
 	}
 	void runitback()
 	{
+		button = button.next;
 		deck = new Deck();
 		dealHands();
 		initiateCommunity();
-		button = button.next;
 	}
 	void dealHands()
 	{
@@ -57,17 +64,17 @@ public class Table {
 	{
 		community = new Community(deck);
 	}
-	void dealFlop()
+	boolean dealFlop()
 	{
-		community.dealFlop();
+		return community.dealFlop();
 	}
-	void dealTurn()
+	boolean dealTurn()
 	{
-		community.dealTurn();
+		return community.dealTurn();
 	}
-	void dealRiver()
+	boolean dealRiver()
 	{
-		community.dealRiver();
+		return community.dealRiver();
 	}
 	void dealAll()
 	{

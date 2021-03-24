@@ -19,8 +19,8 @@ public class Graphic extends JFrame {
 	int originalheight = screenSize.height;
 	int width, height;
 	double widthratio, heightratio;
-	int[] xcoord = new int[] { 410, 705, 1000, 410, 705, 1000, 130, 130, 1300, 1300 };
-	int[] ycoord = new int[] { 140, 140, 140, 720, 720, 720, 300, 470, 300, 470 };
+	int[] xcoord = new int[] { 510, 805, 1100, 510, 805, 1100, 155, 155, 1500, 1500 };
+	int[] ycoord = new int[] { 190, 190, 190, 920, 920, 920, 400, 570, 400, 570 };
 	Table t;
 	JButton all, flop, turn, river, again;
 	JFrame frame = this;
@@ -127,7 +127,7 @@ public class Graphic extends JFrame {
 			Graphics2D g2d = (Graphics2D) g;
 			g.setFont(new Font("Simply Complicated", Font.PLAIN, 25));
 			paintTable(g2d);
-			/*/ draw Grids, delete after finished
+			// draw Grids, delete after finished
 			for (int i = 0; i < width; i += 100) {
 				g2d.drawLine(i, 0, i, 10);
 				g2d.drawString(Integer.toString(i), i - 10, 40);
@@ -136,7 +136,7 @@ public class Graphic extends JFrame {
 				g2d.drawLine(0, i, 10, i);
 				g2d.drawString(Integer.toString(i), 20, i + 10);
 			}
-			// draw Grids, delete after finish*/
+			// draw Grids, delete after finish
 			paintEveryoneCard(t, g2d);
 			paintCommunity(g2d, t);
 			paintButton();
@@ -154,7 +154,7 @@ public class Graphic extends JFrame {
 			g2d.fillOval(0, 0, width, height);
 			g2d.setPaint(new Color(255, 255, 255));
 			g2d.setStroke(new BasicStroke((float) 4.0));
-			g2d.drawRoundRect(width / 5, height / 4, width * 3 / 5, (height - 40) / 2, 100, 100);
+			g2d.drawRoundRect(width / 5, height / 4, width * 1 / 2, (height - 40) / 2, 100, 100);
 		}
 
 		void paintEveryoneCard(Table t, Graphics2D g2d) {
@@ -210,15 +210,15 @@ public class Graphic extends JFrame {
 		}
 
 		void paintButton() {
-			all.setBounds((int) (widthratio * 953), (int) (heightratio * 475), (int) (widthratio * 200),
+			all.setBounds((int) (widthratio * 1103), (int) (heightratio * 625), (int) (widthratio * 150),
 					(int) (heightratio * 100));
-			flop.setBounds((int)(widthratio * 323), (int) (heightratio * 475),
-					(int) (widthratio * 200), (int) (heightratio * 100));
-			turn.setBounds((int)(widthratio * 533), (int) (heightratio * 475),
-					(int) (widthratio * 200), (int) (heightratio * 100));
-			river.setBounds((int)(widthratio * 743), (int) (heightratio * 475),
-					(int) (widthratio * 200), (int) (heightratio * 100));
-			again.setBounds((int)(widthratio*650), (int) (heightratio * 225), (int) (widthratio * 200),
+			flop.setBounds((int)(widthratio * 473), (int) (heightratio * 625),
+					(int) (widthratio * 150), (int) (heightratio * 100));
+			turn.setBounds((int)(widthratio * 683), (int) (heightratio * 625),
+					(int) (widthratio * 150), (int) (heightratio * 100));
+			river.setBounds((int)(widthratio * 893), (int) (heightratio * 625),
+					(int) (widthratio * 150), (int) (heightratio * 100));
+			again.setBounds((int)(widthratio*750), (int) (heightratio * 320), (int) (widthratio * 150),
 					(int) (heightratio * 100));
 			this.add(all);
 			this.add(flop);
@@ -228,15 +228,15 @@ public class Graphic extends JFrame {
 		}
 
 		void paintCommunity(Graphics2D g2d, Table t) {
-			int xcomm = (int) (widthratio * 450);
+			int xcomm = (int) (widthratio * 550);
 			for (int i = 0; i < 5; i++) {
 				int xrect = xcomm + (int) (widthratio * 120 * i);
-				g2d.drawRect((xrect - 10), (int) (heightratio * 340), (int) (widthratio * 120),
+				g2d.drawRect((xrect - 10), (int) (heightratio * 450), (int) (widthratio * 120),
 						(int) (heightratio * 120));
 			}
 			for (Card c : t.communityCard()) {
 				Image card = getImage(c);
-				g2d.drawImage(card, xcomm, (int) (heightratio * 350), (int) (widthratio * 100),
+				g2d.drawImage(card, xcomm, (int) (heightratio * 460), (int) (widthratio * 100),
 						(int) (heightratio * 100), this);
 				xcomm += (int) (widthratio * 120);
 			}

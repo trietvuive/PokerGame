@@ -10,25 +10,38 @@ public class Community {
 	Community(Deck d) {
 		deck = d.getDeck();
 	}
-	void dealFlop()
+	boolean dealFlop()
 	{
-		for(int i = 0;i<3;i++)
+		if(!flop)
+		{
+			for(int i = 0;i<3;i++)
+			{
+				community.add(deck.pop());
+			}
+			flop = true;
+			return true;
+		}
+		return false;
+	}
+	boolean dealTurn()
+	{
+		if(!turn)
 		{
 			community.add(deck.pop());
+			turn = true;
+			return true;
 		}
-		flop = true;
+		return false;
 	}
-	void dealTurn()
+	boolean dealRiver()
 	{
-		if(flop)
-		community.add(deck.pop());
-		turn = true;
-	}
-	void dealRiver()
-	{
-		if(turn)
-		community.add(deck.pop());
-		river = true;
+		if(!river)
+		{
+			community.add(deck.pop());
+			river = true;
+			return true;
+		}
+		return false;
 	}
 	String getCommunity()
 	{
